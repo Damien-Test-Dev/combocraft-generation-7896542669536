@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MixForge</title>
+  <meta name="description" content="MixForge — combinaisons aléatoires uniques à partir de listes. Sortie JSON copiable." />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-title">MixForge</div>
+      <div class="brand-subtitle">Combinaisons aléatoires uniques — sortie JSON prête à copier</div>
+    </div>
+
+    <nav class="header-actions">
+      <button id="btnHelp" class="btn btn-secondary" type="button" aria-haspopup="dialog" aria-controls="helpDialog">
+        Aide / Format des listes
+      </button>
+    </nav>
+  </header>
+
+  <main class="app">
+    <!-- LEFT: catalogue -->
+    <section class="panel panel-left" aria-label="Catalogue des listes">
+      <div class="panel-header">
+        <h2 class="panel-title">Catalogue</h2>
+
+        <div class="search-row">
+          <input id="listSearch" class="input" type="search" placeholder="Rechercher une liste (nom, tags)..." autocomplete="off" />
+          <button id="btnClearSearch" class="btn btn-ghost" type="button" title="Effacer la recherche">✕</button>
+        </div>
+
+        <div class="toolbar-row">
+          <div class="chip chip-info" id="catalogStats">—</div>
+          <div class="toolbar-actions">
+            <button id="btnManageLists" class="btn btn-secondary" type="button" aria-haspopup="dialog" aria-controls="manageDialog">
+              Gérer mes listes
+            </button>
+            <button id="btnReloadData" class="btn btn-ghost" type="button" title="Recharger les listes">⟳</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="listGrid" class="list-grid" role="list">
+        <!-- Cards injected by JS -->
+      </div>
+
+      <div class="panel-footer">
+        <div class="note">
+          Astuce : sélectionne les listes via les cartes (pas de menus déroulants). Tes choix restent visibles en permanence.
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: selection + generator -->
+    <section class="panel panel-right" aria-label="Générateur">
+      <div class="panel-header">
+        <h2 class="panel-title">Sélection & génération</h2>
+
+        <div class="selection-area">
+          <div class="selection-title">Sélection actuelle</div>
+          <div id="selectedChips" class="chips" aria-live="polite">
+            <!-- Selected list chips injected by JS -->
+          </div>
+
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-label">Total possible</div>
+              <div class="kpi-value" id="kpiTotal">—</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Déjà tirées</div>
+              <div class="kpi-value" id="kpiUsed">—</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Restant</div>
+              <div class="kpi-value" id="kpiRemaining">—</div>
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <button id="btnGenerate" class="btn btn-primary" type="button">
+              Générer (unique)
+            </button>
+            <button id="btnReset" class="btn btn-secondary" type="button" title="Réinitialise l’unicité pour cette sélection">
+              Reset
+            </button>
+            <button id="btnCopy" class="btn btn-ghost" type="button" disabled>
+              Copier JSON
+            </button>
+          </div>
+
+          <div id="statusLine" class="status-line" aria-live="polite">
+            Sélectionne au moins une liste pour commencer.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="output-header">
+          <div class="output-title">Sortie JSON</div>
+          <div class="output-hint">Le format est prêt pour être copié/collé dans un autre outil.</div>
+        </div>
+
+        <pre id="jsonOutput" class="json-output" aria-label="Résultat JSON"></pre>
+      </div>
+
+      <div class="panel-footer">
+        <div class="note">
+          Le non-répétition est garanti par sélection (recette) grâce à un état minimal enregistré localement dans ton navigateur.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- HELP DIALOG: shows list data contract + templates -->
+  <dialog id="helpDialog" class="dialog">
+    <form method="dialog" class="dialog-inner">
+      <div class="dialog-header">
+        <h3 class="dialog-title">Aide — Format des listes & bonnes pratiques</h3>
+        <button class="btn btn-ghost" value="cancel" aria-label="Fermer">✕</button>
+      </div>
+
+      <div class="dialog-body">
+        <div class="callout">
+          <strong>Objectif :</strong> tu peux ajouter/modifier des listes sans changer le code.
+          L’app lit des fichiers JSON (catalogue + listes). En mode GitHub Pages, l’app ne peut pas écrire dans le repo :
+          pour personnaliser, utilise <em>Importer</em> / <em>Exporter</em>.
+        </div>
+
+        <details open>
+          <summary><strong>1) Catalogue des listes</strong> (data/index.json)</summary>
+          <p>Ce fichier déclare les listes visibles dans le catalogue (cartes).</p>
+          <pre class="code-block">{
+  "version": 1,
+  "lists": [
+    {
+      "id": "string_unique",
+      "label": "string_humain",
+      "description": "string_optionnelle",
+      "tags": ["tag1", "tag2"],
+      "path": "data/lists/mon_fichier.json"
+    }
+  ]
+}</pre>
+          <p class="small">
+            Règles : <code>id</code> unique et stable (snake_case), <code>path</code> = chemin exact dans le repo.
+          </p>
+        </details>
+
+        <details>
+          <summary><strong>2) Fichier d’une liste</strong> (data/lists/&lt;id&gt;.json)</summary>
+          <p>Chaque liste contient des items tirables. On utilise des objets pour rester extensible (tags, poids, meta).</p>
+          <pre class="code-block">{
+  "id": "ma_liste",
+  "label": "Ma liste",
+  "version": 1,
+  "items": [
+    {
+      "id": "item_1",
+      "label": "Item 1",
+      "tags": ["optionnel"],
+      "weight": 1,
+      "meta": {}
+    }
+  ]
+}</pre>
+          <p class="small">
+            Recommandé : <code>items[].id</code> doit être unique dans la liste (slug). <code>weight</code> par défaut = 1.
+          </p>
+        </details>
+
+        <details>
+          <summary><strong>3) Sortie JSON générée</strong></summary>
+          <p>Le résultat est un JSON exploitable et copiable :</p>
+          <pre class="code-block">{
+  "recipe_id": "kirby_worlds+software_testing_themes",
+  "selected_lists": [
+    { "id": "kirby_worlds", "label": "Univers & mondes – Kirby" }
+  ],
+  "result": {
+    "kirby_worlds": { "id": "dream_land", "label": "Dream Land" }
+  },
+  "combination_id": "hash",
+  "generated_at": "2026-02-04T12:34:56.000Z"
+}</pre>
+        </details>
+
+        <div class="callout subtle">
+          <strong>Note performance :</strong> si tu ajoutes beaucoup de listes ou d’items, l’UI restera fluide grâce à la recherche
+          et au rendu en cartes. Si un jour tu dépasses plusieurs milliers d’items visibles, on activera une optimisation (virtualisation).
+        </div>
+      </div>
+
+      <div class="dialog-footer">
+        <button class="btn btn-primary" value="ok">OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- MANAGE LISTS DIALOG: import/export lists locally (no backend) -->
+  <dialog id="manageDialog" class="dialog">
+    <form method="dialog" class="dialog-inner">
+      <div class="dialog-header">
+        <h3 class="dialog-title">Gérer mes listes</h3>
+        <button class="btn btn-ghost" value="cancel" aria-label="Fermer">✕</button>
+      </div>
+
+      <div class="dialog-body">
+        <div class="callout">
+          Ici, tu peux <strong>importer</strong> tes propres listes (JSON) et elles seront stockées dans ton navigateur.
+          Tu peux aussi <strong>exporter</strong> ton catalogue local. Aucun serveur, aucun compte.
+        </div>
+
+        <section class="manage-section">
+          <h4>Importer</h4>
+          <p class="small">Importe un fichier JSON au format “Catalogue” ou “Liste”. L’app détectera le type.</p>
+
+          <div class="inline-row">
+            <input id="fileImport" class="input" type="file" accept="application/json" />
+            <button id="btnImport" class="btn btn-secondary" type="button">Importer</button>
+          </div>
+
+          <div id="importStatus" class="small muted">—</div>
+        </section>
+
+        <section class="manage-section">
+          <h4>Exporter</h4>
+          <p class="small">Télécharge ton catalogue local (index + listes importées) pour le réutiliser ailleurs.</p>
+
+          <div class="inline-row">
+            <button id="btnExport" class="btn btn-secondary" type="button">Exporter</button>
+            <button id="btnFactoryReset" class="btn btn-ghost" type="button" title="Supprime les listes importées et l’état local">
+              Reset global (local)
+            </button>
+          </div>
+
+          <div class="small muted">
+            Reset global : supprime les listes importées + l’état d’unicité stocké localement.
+          </div>
+        </section>
+      </div>
+
+      <div class="dialog-footer">
+        <button class="btn btn-primary" value="ok">OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
