@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "lists": [
+    {
+      "id": "kirby_worlds",
+      "label": "Univers & mondes – Kirby",
+      "description": "Sélection de mondes, lieux et univers associés à la franchise Kirby.",
+      "tags": ["gaming", "kirby", "worlds", "univers"],
+      "path": "data/lists/kirby_worlds.json"
+    },
+    {
+      "id": "software_testing_themes",
+      "label": "Thèmes – Test logiciel",
+      "description": "Thèmes et concepts clés en test logiciel (stratégie, exécution, qualité).",
+      "tags": ["qa", "testing", "quality", "engineering"],
+      "path": "data/lists/software_testing_themes.json"
+    }
+  ]
+}
