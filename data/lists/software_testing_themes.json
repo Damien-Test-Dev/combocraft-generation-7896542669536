@@ -1,0 +1,105 @@
+{
+  "id": "software_testing_themes",
+  "label": "Thèmes – Test logiciel",
+  "version": 1,
+  "items": [
+    {
+      "id": "test_strategy",
+      "label": "Stratégie de test",
+      "tags": ["planning", "process"],
+      "weight": 1,
+      "meta": { "category": "foundation" }
+    },
+    {
+      "id": "test_plan",
+      "label": "Plan de test",
+      "tags": ["planning", "documentation"],
+      "weight": 1,
+      "meta": { "category": "documentation" }
+    },
+    {
+      "id": "test_cases",
+      "label": "Conception de cas de test",
+      "tags": ["design", "spec"],
+      "weight": 1,
+      "meta": { "category": "design" }
+    },
+    {
+      "id": "test_design_techniques",
+      "label": "Techniques de conception (partition, limites, tables de décision)",
+      "tags": ["design", "techniques"],
+      "weight": 1,
+      "meta": { "category": "design" }
+    },
+    {
+      "id": "exploratory_testing",
+      "label": "Test exploratoire",
+      "tags": ["execution", "discovery"],
+      "weight": 1,
+      "meta": { "category": "execution" }
+    },
+    {
+      "id": "automation_strategy",
+      "label": "Stratégie d’automatisation",
+      "tags": ["automation", "scaling"],
+      "weight": 1,
+      "meta": { "category": "automation" }
+    },
+    {
+      "id": "regression_testing",
+      "label": "Tests de régression",
+      "tags": ["stability", "release"],
+      "weight": 1,
+      "meta": { "category": "release" }
+    },
+    {
+      "id": "smoke_sanity",
+      "label": "Smoke / Sanity testing",
+      "tags": ["release", "gating"],
+      "weight": 1,
+      "meta": { "category": "release" }
+    },
+    {
+      "id": "performance_testing",
+      "label": "Tests de performance",
+      "tags": ["non-functional", "load"],
+      "weight": 1,
+      "meta": { "category": "non-functional" }
+    },
+    {
+      "id": "security_testing",
+      "label": "Tests de sécurité",
+      "tags": ["non-functional", "risk"],
+      "weight": 1,
+      "meta": { "category": "non-functional" }
+    },
+    {
+      "id": "test_data_management",
+      "label": "Gestion des données de test",
+      "tags": ["data", "quality"],
+      "weight": 1,
+      "meta": { "category": "enablement" }
+    },
+    {
+      "id": "defect_management",
+      "label": "Gestion des anomalies (bug management)",
+      "tags": ["triage", "workflow"],
+      "weight": 1,
+      "meta": { "category": "ops" }
+    },
+    {
+      "id": "traceability",
+      "label": "Traçabilité (exigences ↔ tests ↔ defects)",
+      "tags": ["documentation", "governance"],
+      "weight": 1,
+      "meta": { "category": "governance" }
+    },
+    {
+      "id": "risk_based_testing",
+      "label": "Test basé sur le risque (RBT)",
+      "tags": ["planning", "prioritization"],
+      "weight": 1,
+      "meta": { "category": "planning" }
+    }
+  ]
+}
