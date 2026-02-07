@@ -1,0 +1,91 @@
+{
+  "id": "kirby_worlds",
+  "label": "Univers & mondes – Kirby",
+  "version": 1,
+  "items": [
+    {
+      "id": "dream_land",
+      "label": "Dream Land",
+      "tags": ["core", "classic", "world"],
+      "weight": 1,
+      "meta": { "type": "world", "notes": "Lieu récurrent emblématique." }
+    },
+    {
+      "id": "planet_popstar",
+      "label": "Planet Popstar",
+      "tags": ["planet", "recurring"],
+      "weight": 1,
+      "meta": { "type": "planet" }
+    },
+    {
+      "id": "castle_dedede",
+      "label": "Château du Roi Dedede",
+      "tags": ["location", "castle"],
+      "weight": 1,
+      "meta": { "type": "location", "associated_character": "King Dedede" }
+    },
+    {
+      "id": "halcandra",
+      "label": "Halcandra",
+      "tags": ["world", "sky"],
+      "weight": 1,
+      "meta": { "type": "world", "source_hint": "Kirby's Return to Dream Land" }
+    },
+    {
+      "id": "another_dimension",
+      "label": "Another Dimension",
+      "tags": ["dimension", "portal"],
+      "weight": 1,
+      "meta": { "type": "dimension", "notes": "Espace inter-dimensionnel (libellé générique utile)." }
+    },
+    {
+      "id": "floralia",
+      "label": "Floralia",
+      "tags": ["world", "nature"],
+      "weight": 1,
+      "meta": { "type": "world", "source_hint": "Kirby: Triple Deluxe" }
+    },
+    {
+      "id": "dreamstalk",
+      "label": "Dreamstalk",
+      "tags": ["location", "sky"],
+      "weight": 1,
+      "meta": { "type": "location", "source_hint": "Kirby: Triple Deluxe" }
+    },
+    {
+      "id": "the_forgotten_land",
+      "label": "Forgotten Land",
+      "tags": ["world", "ruins"],
+      "weight": 1,
+      "meta": { "type": "world", "source_hint": "Kirby and the Forgotten Land" }
+    },
+    {
+      "id": "wondaria_remains",
+      "label": "Wondaria Remains",
+      "tags": ["location", "ruins"],
+      "weight": 1,
+      "meta": { "type": "location", "source_hint": "Kirby and the Forgotten Land" }
+    },
+    {
+      "id": "redgar_forbidden_lands",
+      "label": "Redgar Forbidden Lands",
+      "tags": ["location", "danger"],
+      "weight": 1,
+      "meta": { "type": "location", "source_hint": "Kirby and the Forgotten Land" }
+    },
+    {
+      "id": "dream_kingdom",
+      "label": "Dream Kingdom",
+      "tags": ["realm", "dream"],
+      "weight": 1,
+      "meta": { "type": "realm", "notes": "Libellé générique de royaume onirique (utile pour prompts)." }
+    },
+    {
+      "id": "dark_matter_realm",
+      "label": "Royaume de Dark Matter",
+      "tags": ["realm", "antagonist"],
+      "weight": 1,
+      "meta": { "type": "realm", "notes": "Domaine lié à l'entité Dark Matter (formulation pratique)." }
+    }
+  ]
+}
